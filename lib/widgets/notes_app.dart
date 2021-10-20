@@ -109,11 +109,18 @@ class _NotesAppState extends State<NotesApp> {
             )
           ],
         ),
-        body: TabBarView(
-          children: [
-            TaskList(_tasks, _submitTask, _deleteTask),
-            NotesList(_deleteNote, _submitNote, _notes),
-          ],
+        body: Container(
+          child: TabBarView(
+            children: [
+              TaskList(_tasks, _submitTask, _deleteTask),
+              NotesList(_deleteNote, _submitNote, _notes),
+            ],
+          ),
+          decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage("assets/image/notes_app_img.png"),
+                fit: BoxFit.cover),
+          ),
         ),
         floatingActionButton: FloatingActionButton(
           child: Icon(Icons.add),
