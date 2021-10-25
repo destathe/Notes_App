@@ -17,7 +17,7 @@ class NotesList extends StatelessWidget {
       context: ctx,
       builder: (_) {
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 100),
+          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
           child: FloatingActionButton.extended(
             onPressed: () {
               deleteNoteF(cTime);
@@ -57,7 +57,8 @@ class NotesList extends StatelessWidget {
               itemCount: notes.length,
               itemBuilder: (BuildContext context, int index) {
                 return GestureDetector(
-                  child: NewNote(notes[index].createdTime, notes[index].note),
+                  child: NewNote(notes[index].createdTime, notes[index].note,
+                      notes[index].noteType),
                   onLongPress: () =>
                       deleteNote(context, notes[index].createdTime),
                   onTap: () => _editNote(context, index),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:notes/screens/note_screen.dart';
 
+import '../screens/note_screen.dart';
 import 'notes_list.dart';
 import '../models/task.dart';
 import '../models/note.dart';
@@ -48,8 +48,9 @@ class _NotesAppState extends State<NotesApp> {
     });
   }
 
-  void _submitNote(DateTime ntime, String note, mode, DateTime oTime) {
-    Note givenNote = Note(note, ntime);
+  void _submitNote(
+      DateTime ntime, String note, mode, DateTime oTime, type noteType) {
+    Note givenNote = Note(note, ntime, noteType);
     setState(() {
       _notes.add(givenNote);
     });
@@ -115,11 +116,6 @@ class _NotesAppState extends State<NotesApp> {
               TaskList(_tasks, _submitTask, _deleteTask),
               NotesList(_deleteNote, _submitNote, _notes),
             ],
-          ),
-          decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage("assets/image/notes_app_img.png"),
-                fit: BoxFit.cover),
           ),
         ),
         floatingActionButton: FloatingActionButton(

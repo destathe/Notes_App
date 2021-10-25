@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../models/note.dart';
+
 TextEditingController _noteController = TextEditingController();
 
 // ignore: must_be_immutable
@@ -24,6 +26,17 @@ class NoteScreen extends StatefulWidget {
 
 class _NoteScreenState extends State<NoteScreen> {
   String note = '';
+  String dropdownValue = 'Normal';
+
+  type setNoteType() {
+    if (dropdownValue == 'Important')
+      return type.important;
+    else if (dropdownValue == 'Quote')
+      return type.quote;
+    else
+      return type.normal;
+  }
+
   void _submitData(BuildContext ctx) {
     setState(() {
       note = _noteController.text;
@@ -33,6 +46,7 @@ class _NoteScreenState extends State<NoteScreen> {
       note,
       widget.mode,
       widget.oTime,
+      setNoteType(),
     );
 
     Navigator.of(ctx).pop();
@@ -44,10 +58,36 @@ class _NoteScreenState extends State<NoteScreen> {
       appBar: AppBar(
         title: Text('Edit Note'),
         actions: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: DropdownButton<String>(
+              value: dropdownValue,
+              icon: const Icon(Icons.arrow_downward),
+              iconSize: 24,
+              elevation: 16,
+              style: const TextStyle(color: Colors.deepPurple),
+              underline: Container(
+                height: 2,
+                color: Colors.deepPurpleAccent,
+              ),
+              onChanged: (String? newValue) {
+                setState(() {
+                  dropdownValue = newValue!;
+                });
+              },
+              items: <String>['Normal', 'Important', 'Quote']
+                  .map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          ),
           IconButton(
             onPressed: () => _submitData(context),
             icon: Icon(Icons.check_rounded),
-          )
+          ),
         ],
       ),
       body: Container(
